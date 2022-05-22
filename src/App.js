@@ -5,6 +5,8 @@ import Login from './Components/AuthenticationPage/Login';
 import Register from './Components/AuthenticationPage/Register';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import RequiredAuth from './Components/CommonComp/RequiredAuth';
+import Purchase from './Components/PurchasePage/Purchase';
 
 function App() {
   return (
@@ -13,8 +15,13 @@ function App() {
         <Route path='/' element={<HomePage></HomePage>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/purchase' element={
+          <RequiredAuth>
+            <Purchase></Purchase>
+          </RequiredAuth>}>
+        </Route>
       </Routes>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
