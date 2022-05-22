@@ -1,17 +1,23 @@
 import React from 'react';
+import Footer from '../CommonComp/Footer';
 import Header from '../CommonComp/Header';
+import Banner from './Banner';
+import Parts from './Parts';
+import Summary from './Summary';
 
 const HomePage = () => {
     return (
         <div className=''>
             <div className='flex flex-col md:flex-row justify-between bg-slate-200 px-4 py-2'>
-                <p>
-                    <i className="far fa-envelope"></i>
-                    info.sonic@techland.com</p>
-                <p>
-                    <i className="fas fa-location-dot"></i>
-                    Bogura sadar, Bangladesh</p>
-                <div>
+                <div className='flex flex-col md:flex-row gap-2'>
+                    <p>
+                        <i className="far fa-envelope"></i>
+                        info.sonic@techland.com</p>
+                    <p>
+                        <i className="fas fa-location-dot"></i>
+                        Bogura sadar, Bangladesh</p>
+                </div>
+                <div className='hidden md:block'>
                     <ul className="flex gap-8">
                         <li>
                             <i className="fab fa-facebook-f"></i>
@@ -29,7 +35,10 @@ const HomePage = () => {
                 </div>
             </div>
             <Header></Header>
-            <h1>this is home</h1>
+            <Banner></Banner>
+            <Parts></Parts>
+            <Summary></Summary>
+            <Footer></Footer>
         </div>
     );
 };
