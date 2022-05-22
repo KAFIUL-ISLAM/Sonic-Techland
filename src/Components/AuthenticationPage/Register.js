@@ -1,28 +1,27 @@
-import React, { useEffect, useRef } from 'react';
-import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import Footer from '../CommonComp/Footer';
 import Header from '../CommonComp/Header';
 import Processing from '../Spinner/Processing';
 
-const Login = () => {
+const Register = () => {
 
-    const emailRef = useRef('');
-    const passwordRef = useRef('');
+    const [agree, setAgree] = useState(false);
+
     const navigate = useNavigate();
     const location = useLocation();
     // const setAccessToken = useSetAccessToken();
 
-    const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+    const [updateProfile, updating] = useUpdateProfile(auth);
 
     useEffect(() => {
         let from = location.state?.from?.pathname || "/";
@@ -31,59 +30,53 @@ const Login = () => {
         }
     })
 
-    const handleLogin = async e => {
+    const handleRegister = async e => {
         e.preventDefault();
-        const email = emailRef.current.value;
-        const password = passwordRef.current.value;
-        await signInWithEmailAndPassword(email, password);
+        const displayName = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName });
         // await setAccessToken(email);
     }
     const handleGoogleSignIn = () => {
         signInWithGoogle();
     }
 
-    const handleResetPassword = async () => {
-        const email = emailRef.current.value;
-
-        if (email) {
-            await sendPasswordResetEmail(email);
-            toast.success('Reset Password e-mail sent successfully');
-        }
-        else {
-            toast.error('Please enter your Email');
-        }
-    }
-
     return (
         <div>
             <Header></Header>
             <div className='min-h-screen flex justify-center items-center my-8'>
-                <div className="p-4 bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 lg:p-8">
-                    <form className="space-y-8" onSubmit={handleLogin}>
+                <div className="p-4 lg:w-2/5 bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 lg:p-8">
+                    <form className="space-y-8" onSubmit={handleRegister}>
                         <div className='text-center '>
-                            <h5 className="text-2xl font-medium text-gray-900 mb-4">Welcome back to Sonic Techland</h5>
-                            <h2 className='text-3xl font-medium text-gray-900 '>Sign in</h2>
+                            <h5 className="text-2xl font-medium text-gray-900 mb-4">Welcome to Sonic Techland</h5>
+                            <h2 className='text-3xl font-medium text-gray-900 '>Sign up</h2>
+                        </div>
+                        <div>
+                            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                            <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your name" required />
                         </div>
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                            <input type="email" ref={emailRef} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your email" required="" />
+                            <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your email" required />
                         </div>
                         <div>
                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                            <input type="password" ref={passwordRef} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required="" />
+                            <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                         </div>
                         <div className="flex items-start">
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
-                                    <input id="remember" type="checkbox" value="" className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 cursor-pointer" required="" />
+                                    <input id="remember" type="checkbox" value="" className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 cursor-pointer" onClick={() => setAgree(!agree)} />
                                 </div>
-                                <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900">Remember me</label>
+                                <label htmlFor="terms" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <span className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</span>
+                                </label>
                             </div>
-                            <p onClick={handleResetPassword} className="ml-auto text-sm text-blue-700 hover:underline cursor-pointer">Lost Password?</p>
                         </div>
                         {
                             error && <div className='text-red-600'>
-                                <p>Error: {error.message}</p>
+                                <p>{error.message}</p>
                             </div>
                         }
                         {
@@ -91,14 +84,15 @@ const Login = () => {
                                 <p>Error: {googleError.message}</p>
                             </div>
                         }
-                        <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">{
-                            loading ?
-                                <Processing></Processing>
-                                :
-                                <p>Login to your account</p>
-                        }</button>
+                        <button type="submit" className={`${!agree ? 'bg-blue-400' : 'bg-blue-700 hover:bg-blue-800'} w-full text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center`} disabled={!agree}>
+                            {
+                                loading ?
+                                    <Processing></Processing>
+                                    :
+                                    <p>Create a new account</p>
+                            }</button>
                         <div className="text-sm font-medium text-gray-500 ">
-                            Not registered? <Link to={"/register"} className="text-blue-700 hover:underline">Create account</Link>
+                            Already registered? <Link to={"/login"} className="text-blue-700 hover:underline">Login to your account</Link>
                         </div>
                     </form>
                     <div className="divider">OR</div>
@@ -122,4 +116,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
