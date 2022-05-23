@@ -10,6 +10,7 @@ import Purchase from './Components/PurchasePage/Purchase';
 import Dashboard from './Components/Dashboard/Dashboard';
 import MyProfile from './Components/Dashboard/MyProfile';
 import MyOrders from './Components/Dashboard/MyOrders';
+import AddItem from './Components/Dashboard/AddItem';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           </RequiredAuth>}>
           <Route index element={<MyProfile></MyProfile>}></Route>
           <Route path='orders' element={<MyOrders></MyOrders>}></Route>
+          <Route path='add' element={<AddItem></AddItem>}></Route>
         </Route>
         <Route path='*' element={<h1>not found</h1>}></Route>
       </Routes>
