@@ -12,6 +12,7 @@ import MyProfile from './Components/Dashboard/MyProfile';
 import MyOrders from './Components/Dashboard/MyOrders';
 import AddItem from './Components/Dashboard/AddItem';
 import AddReview from './Components/Dashboard/AddReview';
+import ManageItem from './Components/Dashboard/ManageItem';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path='orders' element={<MyOrders></MyOrders>}></Route>
           <Route path='additem' element={<AddItem></AddItem>}></Route>
           <Route path='addreview' element={<AddReview></AddReview>}></Route>
+          <Route path='manageitem' element={<ManageItem></ManageItem>}></Route>
         </Route>
         <Route path='*' element={<h1>not found</h1>}></Route>
       </Routes>
