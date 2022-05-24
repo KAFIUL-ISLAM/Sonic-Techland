@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const MyOrders = () => {
 
-    const { data: orders } = useQuery('items', () => fetch('http://localhost:5000/orders').then(res => res.json()))
+    const { data: orders } = useQuery('orders', () => fetch('http://localhost:5000/orders').then(res => res.json()))
 
     const handleDelete = id => {
 
@@ -33,7 +33,7 @@ const MyOrders = () => {
                             <td>${order.price}</td>
                             <td>{order.quantity}</td>
                             <td>
-                                {order.paymentStatus ?
+                                {order.status === 'paid' ?
                                     <small className='text-green-600'>Paid</small>
                                     :
                                     <><button onClick={() => handleDelete(order._id)} className="btn btn-xs">Delete</button>

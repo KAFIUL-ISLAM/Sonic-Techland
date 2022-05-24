@@ -14,6 +14,7 @@ import AddItem from './Components/Dashboard/AddItem';
 import AddReview from './Components/Dashboard/AddReview';
 import ManageItem from './Components/Dashboard/ManageItem';
 import PaymentPage from './Components/Dashboard/PaymentPage';
+import ManageAllOrders from './Components/Dashboard/ManageAllOrders';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path='additem' element={<AddItem></AddItem>}></Route>
           <Route path='addreview' element={<AddReview></AddReview>}></Route>
           <Route path='manageitem' element={<ManageItem></ManageItem>}></Route>
+          <Route path='manageorders' element={<ManageAllOrders></ManageAllOrders>}></Route>
           <Route path='payment/:id' element={<PaymentPage></PaymentPage>}></Route>
         </Route>
         <Route path='*' element={<h1>not found</h1>}></Route>
