@@ -54,17 +54,17 @@ const AddItem = () => {
                 <div className="flex gap-2">
                     <div className="flex-1">
                         <input type="number" className="input input-bordered w-full" {...register("minOrderQuantity", { required: true })} placeholder="Minimum order quantity" />
-                        {errors.price && <span className="text-red-600">*This field is required</span>}
+                        {errors.minOrderQuantity && <span className="text-red-600">*This field is required</span>}
                     </div>
                     <div className="flex-1">
                         <input type="number" className="input input-bordered w-full" {...register("quantity", { required: true })} placeholder="Stock quantity" />
-                        {errors.price && <span className="text-red-600">*This field is required</span>}
+                        {errors.quantity && <span className="text-red-600">*This field is required</span>}
                     </div>
                 </div>
                 <textarea className="input input-bordered w-full" {...register("description", { required: true })} placeholder="Description" />
-                {errors.price && <span className="text-red-600">*This field is required</span>}
+                {errors.description && <span className="text-red-600">*This field is required</span>}
                 <input type="file" className="input input-bordered w-full" {...register("image", { required: true })} />
-                {errors.price && <span className="text-red-600">*This field is required</span>}
+                {errors.image && <span className="text-red-600">*This field is required</span>}
                 <input className="btn" type="submit" />
             </form>
         </div>
