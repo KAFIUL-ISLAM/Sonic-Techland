@@ -5,6 +5,7 @@ import auth from '../../firebase.init';
 import Footer from '../CommonComp/Footer';
 import Header from '../CommonComp/Header';
 import Processing from '../Spinner/Processing';
+import useSetAccessToken from '../../Hooks/useSetAccessToken';
 
 const Register = () => {
 
@@ -12,7 +13,7 @@ const Register = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    // const setAccessToken = useSetAccessToken();
+    const setAccessToken = useSetAccessToken();
 
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [
@@ -21,7 +22,7 @@ const Register = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
-    const [updateProfile, updating] = useUpdateProfile(auth);
+    const [updateProfile] = useUpdateProfile(auth);
 
     useEffect(() => {
         let from = location.state?.from?.pathname || "/";
@@ -37,7 +38,7 @@ const Register = () => {
         const password = e.target.password.value;
         await createUserWithEmailAndPassword(email, password);
         await updateProfile({ displayName });
-        // await setAccessToken(email);
+        await setAccessToken(email);
     }
     const handleGoogleSignIn = () => {
         signInWithGoogle();
@@ -51,7 +52,7 @@ const Register = () => {
                     <form className="space-y-8" onSubmit={handleRegister}>
                         <div className='text-center '>
                             <h5 className="text-2xl font-medium text-gray-900 mb-4">Welcome to Sonic Techland</h5>
-                            <h2 className='text-3xl font-medium text-gray-900 '>Sign up</h2>
+                            <h2 className='text-3xl font-medium text-primary '>Sign up</h2>
                         </div>
                         <div>
                             <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>
@@ -84,7 +85,7 @@ const Register = () => {
                                 <p>Error: {googleError.message}</p>
                             </div>
                         }
-                        <button type="submit" className={`${!agree ? 'bg-blue-400' : 'bg-blue-700 hover:bg-blue-800'} w-full text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center`} disabled={!agree}>
+                        <button type="submit" className={`${!agree ? 'bg-blue-400' : 'bg-primary hover:bg-blue-800'} w-full text-white   focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center`} disabled={!agree}>
                             {
                                 loading ?
                                     <Processing></Processing>
@@ -96,7 +97,7 @@ const Register = () => {
                         </div>
                     </form>
                     <div className="divider">OR</div>
-                    <button onClick={handleGoogleSignIn} type="button" className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2 w-full">
+                    <button onClick={handleGoogleSignIn} type="button" className="text-white bg-blue-600 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2 w-full">
                         {googleLoading ?
                             <span className='flex justify-center items-center'>
                                 <svg className="mx-3 h-6 w-6 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

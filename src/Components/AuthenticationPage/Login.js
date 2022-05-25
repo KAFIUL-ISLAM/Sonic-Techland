@@ -3,6 +3,7 @@ import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWith
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
+import useSetAccessToken from '../../Hooks/useSetAccessToken';
 import Footer from '../CommonComp/Footer';
 import Header from '../CommonComp/Header';
 import Processing from '../Spinner/Processing';
@@ -13,7 +14,7 @@ const Login = () => {
     const passwordRef = useRef('');
     const navigate = useNavigate();
     const location = useLocation();
-    // const setAccessToken = useSetAccessToken();
+    const setAccessToken = useSetAccessToken();
 
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -36,7 +37,7 @@ const Login = () => {
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
         await signInWithEmailAndPassword(email, password);
-        // await setAccessToken(email);
+        await setAccessToken(email);
     }
     const handleGoogleSignIn = () => {
         signInWithGoogle();
@@ -62,7 +63,7 @@ const Login = () => {
                     <form className="space-y-8" onSubmit={handleLogin}>
                         <div className='text-center '>
                             <h5 className="text-2xl font-medium text-gray-900 mb-4">Welcome back to Sonic Techland</h5>
-                            <h2 className='text-3xl font-medium text-gray-900 '>Sign in</h2>
+                            <h2 className='text-3xl font-medium text-primary '>Sign in</h2>
                         </div>
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
@@ -91,7 +92,7 @@ const Login = () => {
                                 <p>Error: {googleError.message}</p>
                             </div>
                         }
-                        <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">{
+                        <button type="submit" className="w-full text-white bg-primary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">{
                             loading ?
                                 <Processing></Processing>
                                 :
@@ -102,7 +103,7 @@ const Login = () => {
                         </div>
                     </form>
                     <div className="divider">OR</div>
-                    <button onClick={handleGoogleSignIn} type="button" className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2 w-full">
+                    <button onClick={handleGoogleSignIn} type="button" className="text-white bg-blue-600 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2 w-full">
                         {googleLoading ?
                             <span className='flex justify-center items-center'>
                                 <svg className="mx-3 h-6 w-6 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
