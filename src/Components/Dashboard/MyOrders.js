@@ -36,8 +36,8 @@ const MyOrders = () => {
             })
     }, [orders, email])
 
-    const handlePayment = () => {
-
+    const handlePayment = e => {
+        e.preventDefault();
     }
 
     return (
@@ -67,10 +67,10 @@ const MyOrders = () => {
                             <td>{order.price}</td>
                             <td>
                                 {order.status === 'paid' ?
-                                    <small className='text-green-600'>Paid</small>
+                                    <p className='text-green-600 font-bold'>Paid</p>
                                     :
                                     order.status === 'shipped' ?
-                                        <small className='text-orange-600'>Shipped</small>
+                                        <p className='text-orange-600 font-bold'>Shipped</p>
                                         :
                                         <>
                                             <label for="delete-confirm" class="btn btn-xs modal-button">Delete</label>
@@ -90,10 +90,9 @@ const MyOrders = () => {
                                             <div class="modal modal-bottom sm:modal-middle">
                                                 <div class="modal-box">
                                                     <Elements stripe={stripePromise}>
-                                                        <PaymentModal />
+                                                        <PaymentModal order={order}/>
                                                     </Elements>
                                                     <div class="modal-action">
-                                                        <button onClick={() => handlePayment(order._id)} className="btn">Confirm</button>
                                                         <label for="payment-modal" class="btn">Cancel</label>
                                                     </div>
                                                 </div>

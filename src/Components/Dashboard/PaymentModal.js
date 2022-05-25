@@ -1,11 +1,31 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const PaymentModal = () => {
+const PaymentModal = ({ order }) => {
 
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [clientSecret, setClientSecret] = useState('');
+
+    const { _id, email, price, name } = order;
+
+    useEffect(() => {
+        fetch('http://localhost:5000/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({price})
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.clientSecret) {
+                    setClientSecret(data.clientSecret);
+            }
+        })
+    }, [price])
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -27,6 +47,38 @@ const PaymentModal = () => {
         else {
             setError('');
         }
+        setSuccess('');
+        const { paymentIntent, error: paymentError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: name,
+                        email: email
+                    }
+                }
+            }
+        );
+        if (paymentError) {
+            setError(paymentError?.message);
+        }
+        else {
+            setError('');
+            setSuccess('Payment Completed Successfully');
+            const orderStatus = {updatedStatus: 'paid'}
+            fetch(`http://localhost:5000/orders/${_id}`, {
+                method: 'PUT',
+                headers: {
+                   'content-type': 'application/json'
+                },
+                body: JSON.stringify(orderStatus)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    
+                })
+        }
 
     }
 
@@ -47,13 +99,16 @@ const PaymentModal = () => {
                         },
                     },
                 }} />
-                <button className="btn" type="submit" disabled={!stripe}>
+                <button className="btn mt-4" type="submit" disabled={!stripe || !clientSecret}>
                     Pay
                 </button>
 
             </form>
             {
-                error && <span className="text-red-600">{error}</span>
+                error && <span className="text-red-600 mt-4">{error}</span>
+            }
+            {
+                success && <span className="text-green-600 mt-4">{success}</span>
             }
         </>
     );

@@ -30,10 +30,10 @@ const ManageAllOrders = () => {
                             <td>{order.totalPrice}</td>
                             <td>
                                 {order.status === 'paid' ?
-                                    <button className="btn btn-xs">Shipped</button>
+                                    <button className="btn btn-xs">Mark shipped</button>
                                     :
                                     order.status === 'shipped' ?
-                                        <small className='text-green-600'>Shipped</small>
+                                        <p className='text-green-600 font-bold'>Shipped</p>
                                         : <>
                                             <label for="delete-confirm" class="btn btn-xs modal-button">Delete</label>
                                             <input type="checkbox" id="delete-confirm" class="modal-toggle" />
