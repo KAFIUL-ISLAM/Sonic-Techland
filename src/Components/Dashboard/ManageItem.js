@@ -23,9 +23,11 @@ const ManageItem = () => {
 
     return (
         <div className="overflow-x-auto">
+            <h1 className="uppercase text-2xl font-bold mb-4">Manage all items</h1>
             <table className="table w-full">
                 <thead>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th>Item Name</th>
                         <th>Price</th>
@@ -34,9 +36,14 @@ const ManageItem = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {items?.map(item =>
+                    {items?.map((item,index) =>
                         <tr key={item._id}>
-                            <th>1</th>
+                            <th>{index + 1}</th>
+                            <th><div class="avatar">
+                                <div class="w-16 rounded">
+                                    <img src={item.image}alt="Tailwind-CSS-Avatar-component" />
+                                </div>
+                            </div></th>
                             <td>{item.name.slice(0,25)}</td>
                             <td>${item.price}</td>
                             <td>{item.quantity}</td>
