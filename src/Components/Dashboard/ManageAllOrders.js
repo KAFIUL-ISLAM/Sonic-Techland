@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 const ManageAllOrders = () => {
 
-    const { data: orders } = useQuery('orders', () => fetch('http://localhost:5000/parts').then(res => res.json()))
+    const { data: orders } = useQuery('orders', () => fetch('http://localhost:5000/orders').then(res => res.json()))//admin verify
 
     const handleDelete = id => {
 
@@ -34,8 +34,20 @@ const ManageAllOrders = () => {
                                     :
                                     order.status === 'shipped' ?
                                         <small className='text-green-600'>Shipped</small>
-                                        :
-                                        <button onClick={() => handleDelete(order._id)} className="btn btn-xs">Delete</button>}
+                                        : <>
+                                            <label for="delete-confirm" class="btn btn-xs modal-button">Delete</label>
+                                            <input type="checkbox" id="delete-confirm" class="modal-toggle" />
+                                            <div class="modal modal-bottom sm:modal-middle">
+                                                <div class="modal-box">
+                                                    <h3 class="font-bold text-lg">Are you sure about delete?</h3>
+                                                    <p class="py-4">The action cannot be undone!</p>
+                                                    <div class="modal-action">
+                                                        <button onClick={() => handleDelete(order._id)} className="btn">Confirm</button>
+                                                        <label for="delete-confirm" class="btn">Cancel</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>}
                             </td>
                         </tr>
                     )}

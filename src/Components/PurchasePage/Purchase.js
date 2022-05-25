@@ -54,6 +54,7 @@ const Purchase = () => {
         const email = user.email;
         const userName = user.displayName;
         const itemName = name;
+        const itemImage = image;
         const phone = e.target.floating_phone.value;
         const company = e.target.floating_company.value;
         const address = e.target.floating_address.value;
@@ -64,6 +65,7 @@ const Purchase = () => {
             email,
             userName,
             itemName,
+            itemImage,
             phone,
             company,
             address,

@@ -36,15 +36,15 @@ const ManageItem = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {items?.map((item,index) =>
+                    {items?.map((item, index) =>
                         <tr key={item._id}>
                             <th>{index + 1}</th>
-                            <th><div class="avatar">
+                            <td><div class="avatar">
                                 <div class="w-16 rounded">
-                                    <img src={item.image}alt="Tailwind-CSS-Avatar-component" />
+                                    <img src={item.image} alt="Tailwind-CSS-Avatar-component" />
                                 </div>
-                            </div></th>
-                            <td>{item.name.slice(0,25)}</td>
+                            </div></td>
+                            <td>{item.name.slice(0, 25)}</td>
                             <td>${item.price}</td>
                             <td>{item.quantity}</td>
                             <td><label for="delete-confirm" class="btn btn-xs modal-button">Delete</label>
@@ -58,7 +58,8 @@ const ManageItem = () => {
                                             <label for="delete-confirm" class="btn">Cancel</label>
                                         </div>
                                     </div>
-                                </div></td>
+                                </div>
+                            </td>
                         </tr>
                     )}
                 </tbody>
