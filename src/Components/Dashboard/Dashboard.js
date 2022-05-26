@@ -28,14 +28,14 @@ const Dashboard = () => {
                             !admin ?
                             <>
                                 <li><Link to={"/dashboard/orders"}>My Orders</Link></li>
-                                <li><Link to={"/dashboard/addreview"}>Add a review</Link></li>
+                                <li><Link to={"/dashboard/addreview"}>Add A Review</Link></li>
                             </>
                             :
                             <>
                                 <li><Link to={"/dashboard/additem"}>Add New Item</Link></li>
-                                <li><Link to={"/dashboard/manageitem"}>Manage all items</Link></li>
-                                <li><Link to={"/dashboard/manageorders"}>Manage all orders</Link></li>
-                                <li><Link to={"/dashboard/manageusers"}>Manage users</Link></li>
+                                <li><Link to={"/dashboard/manageitem"}>Manage All Items</Link></li>
+                                <li><Link to={"/dashboard/manageorders"}>Manage All Orders</Link></li>
+                                <li><Link to={"/dashboard/manageusers"}>Manage Users</Link></li>
                             </>
                         }
                     </ul>

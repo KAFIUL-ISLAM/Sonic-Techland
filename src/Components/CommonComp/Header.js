@@ -52,7 +52,7 @@ const Header = () => {
                         <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 font-semibold">
                             <li><Link to={"/dashboard"}>Dashboard</Link></li>
                             <li><a>Blogs</a></li>
-                            <li><a>My portfolio</a></li>
+                            <li><a>My Portfolio</a></li>
                         </ul>
                     </div>
                     <Link to={'/'} className="btn btn-ghost normal-case text-2xl text-primary font-bold">Sonic Techland</Link>
@@ -61,7 +61,7 @@ const Header = () => {
                     <ul className="menu menu-horizontal p-0 font-semibold">
                         <li><Link to={"/dashboard"}>Dashboard</Link></li>
                         <li><a>Blogs</a></li>
-                        <li><a>My portfolio</a></li>
+                        <li><a>My Portfolio</a></li>
                     </ul>
                 </div>
                 <div className="navbar-end">
