@@ -16,6 +16,8 @@ import ManageItem from './Components/Dashboard/ManageItem';
 import ManageAllOrders from './Components/Dashboard/ManageAllOrders';
 import ManageUsers from './Components/Dashboard/ManageUsers';
 import RequiredAdmin from './Components/CommonComp/RequireAdmin';
+import Blogs from './Components/Blogs/Blogs';
+import MyPortfolio from './Components/Protfolio/MyPortfolio';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path='/' element={<HomePage></HomePage>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
+        <Route path='/blogs' element={<Blogs></Blogs>}></Route>
+        <Route path='/portfolio' element={<MyPortfolio></MyPortfolio>}></Route>
         <Route path='/purchase/:id' element={
           <RequiredAuth>
             <Purchase></Purchase>
