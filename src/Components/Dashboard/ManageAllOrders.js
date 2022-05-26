@@ -27,7 +27,7 @@ const ManageAllOrders = () => {
             .then(data => {
                 if (data.acknowledged) {
                     toast.success('Order marked as shipped');
-                } 
+                }
             })
     }
 
@@ -47,13 +47,13 @@ const ManageAllOrders = () => {
                 <tbody>
                     {orders?.map((order, index) =>
                         <tr key={order._id}>
-                            <th>{index+1}</th>
+                            <th>{index + 1}</th>
                             <td>{order.email}</td>
                             <td>{order.quantity}</td>
                             <td>${order.price}</td>
                             <td>
                                 {order.status === 'paid' ?
-                                    <button onClick={()=> handleShipped(order._id)} className="btn btn-xs">Mark shipped</button>
+                                    <button onClick={() => handleShipped(order._id)} className="btn btn-xs">Mark shipped</button>
                                     :
                                     order.status === 'shipped' ?
                                         <p className='text-green-600 font-bold'>Shipped</p>

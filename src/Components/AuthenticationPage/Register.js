@@ -5,16 +5,14 @@ import auth from '../../firebase.init';
 import Footer from '../CommonComp/Footer';
 import Header from '../CommonComp/Header';
 import Processing from '../Spinner/Processing';
-import useSetAccessToken from '../../Hooks/useSetAccessToken';
+import useToken from '../../Hooks/useToken';
 
 const Register = () => {
 
     const [agree, setAgree] = useState(false);
-
     const navigate = useNavigate();
     const location = useLocation();
-    const setAccessToken = useSetAccessToken();
-
+   
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [
         createUserWithEmailAndPassword,
@@ -23,10 +21,11 @@ const Register = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile] = useUpdateProfile(auth);
+    const [token] = useToken(user|| googleUser);
 
     useEffect(() => {
         let from = location.state?.from?.pathname || "/";
-        if (user || googleUser) {
+        if (token) {
             navigate(from, { replace: true })
         }
     })
@@ -38,7 +37,6 @@ const Register = () => {
         const password = e.target.password.value;
         await createUserWithEmailAndPassword(email, password);
         await updateProfile({ displayName });
-        await setAccessToken(email);
     }
     const handleGoogleSignIn = () => {
         signInWithGoogle();

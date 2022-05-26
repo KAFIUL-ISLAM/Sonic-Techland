@@ -3,7 +3,7 @@ import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWith
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
-import useSetAccessToken from '../../Hooks/useSetAccessToken';
+import useToken from '../../Hooks/useToken';
 import Footer from '../CommonComp/Footer';
 import Header from '../CommonComp/Header';
 import Processing from '../Spinner/Processing';
@@ -14,7 +14,6 @@ const Login = () => {
     const passwordRef = useRef('');
     const navigate = useNavigate();
     const location = useLocation();
-    const setAccessToken = useSetAccessToken();
 
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -24,10 +23,12 @@ const Login = () => {
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
+    const [token] = useToken(user || googleUser);
+
 
     useEffect(() => {
         let from = location.state?.from?.pathname || "/";
-        if (user || googleUser) {
+        if (token) {
             navigate(from, { replace: true })
         }
     })
@@ -37,7 +38,6 @@ const Login = () => {
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
         await signInWithEmailAndPassword(email, password);
-        await setAccessToken(email);
     }
     const handleGoogleSignIn = () => {
         signInWithGoogle();

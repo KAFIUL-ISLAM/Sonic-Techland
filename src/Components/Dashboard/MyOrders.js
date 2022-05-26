@@ -3,7 +3,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
 import useOrderDelete from '../../Hooks/useOrderDelete';
 import PaymentModal from './PaymentModal';
@@ -36,9 +35,6 @@ const MyOrders = () => {
             })
     }, [orders, email])
 
-    const handlePayment = e => {
-        e.preventDefault();
-    }
 
     return (
         <div className="overflow-x-auto">
@@ -62,7 +58,7 @@ const MyOrders = () => {
                                     <img src={order.itemImage} alt="Tailwind-CSS-Avatar-component" />
                                 </div>
                             </div></td>
-                            <td>{order.itemName.slice(0, 25)}</td>
+                            <td>{order.itemName?.slice(0, 25)}</td>
                             <td>${order.quantity}</td>
                             <td>{order.price}</td>
                             <td>
