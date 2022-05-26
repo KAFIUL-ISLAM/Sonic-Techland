@@ -1,13 +1,36 @@
-import React from 'react';
-import { useQuery } from 'react-query';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import useOrderDelete from '../../Hooks/useOrderDelete';
 
 const ManageAllOrders = () => {
 
-    const { data: orders } = useQuery('orders', () => fetch('http://localhost:5000/orders').then(res => res.json()))//admin verify
+    const orderDelete = useOrderDelete();
+    const [orders, setOrders] = useState([]);
 
-    const handleDelete = id => {
+    useEffect(() => {
+        fetch('http://localhost:5000/orders')
+            .then(res => res.json())
+            .then(data =>
+                setOrders(data))
+    }, [orders])//admin verify
 
+    const handleShipped = id => {
+        const orderStatus = { updatedStatus: 'shipped' }
+        fetch(`http://localhost:5000/orders/${id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(orderStatus)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast.success('Order marked as shipped');
+                } 
+            })
     }
+
 
     return (
         <div className="overflow-x-auto">
@@ -22,15 +45,15 @@ const ManageAllOrders = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders?.map(order =>
+                    {orders?.map((order, index) =>
                         <tr key={order._id}>
-                            <th>1</th>
+                            <th>{index+1}</th>
                             <td>{order.email}</td>
-                            <td>${order.quantity}</td>
-                            <td>{order.totalPrice}</td>
+                            <td>{order.quantity}</td>
+                            <td>${order.price}</td>
                             <td>
                                 {order.status === 'paid' ?
-                                    <button className="btn btn-xs">Mark shipped</button>
+                                    <button onClick={()=> handleShipped(order._id)} className="btn btn-xs">Mark shipped</button>
                                     :
                                     order.status === 'shipped' ?
                                         <p className='text-green-600 font-bold'>Shipped</p>
@@ -42,7 +65,7 @@ const ManageAllOrders = () => {
                                                     <h3 class="font-bold text-lg">Are you sure about delete?</h3>
                                                     <p class="py-4">The action cannot be undone!</p>
                                                     <div class="modal-action">
-                                                        <button onClick={() => handleDelete(order._id)} className="btn">Confirm</button>
+                                                        <button onClick={() => orderDelete(order._id)} className="btn">Confirm</button>
                                                         <label for="delete-confirm" class="btn">Cancel</label>
                                                     </div>
                                                 </div>

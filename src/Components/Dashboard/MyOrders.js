@@ -85,7 +85,7 @@ const MyOrders = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label for="payment-modal" class="btn btn-xs modal-button">Delete</label>
+                                            <label for="payment-modal" class="btn btn-xs modal-button">Pay now</label>
                                             <input type="checkbox" id="payment-modal" class="modal-toggle" />
                                             <div class="modal modal-bottom sm:modal-middle">
                                                 <div class="modal-box">
@@ -97,9 +97,6 @@ const MyOrders = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <Link to={"/dashboard/payment/:id"}>
-                                                <button className="btn btn-xs">Pay now</button>
-                                            </Link>
                                         </>}
                             </td>
                         </tr>

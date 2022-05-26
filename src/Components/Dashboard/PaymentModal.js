@@ -1,12 +1,12 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const PaymentModal = ({ order }) => {
 
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
     const [clientSecret, setClientSecret] = useState('');
 
     const { _id, email, price, name } = order;
@@ -47,7 +47,7 @@ const PaymentModal = ({ order }) => {
         else {
             setError('');
         }
-        setSuccess('');
+
         const { paymentIntent, error: paymentError } = await stripe.confirmCardPayment(
             clientSecret,
             {
@@ -65,7 +65,7 @@ const PaymentModal = ({ order }) => {
         }
         else {
             setError('');
-            setSuccess('Payment Completed Successfully');
+            toast.success('Payment Completed Successfully');
             const orderStatus = {updatedStatus: 'paid'}
             fetch(`http://localhost:5000/orders/${_id}`, {
                 method: 'PUT',
@@ -106,9 +106,6 @@ const PaymentModal = ({ order }) => {
             </form>
             {
                 error && <span className="text-red-600 mt-4">{error}</span>
-            }
-            {
-                success && <span className="text-green-600 mt-4">{success}</span>
             }
         </>
     );
