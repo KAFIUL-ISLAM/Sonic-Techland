@@ -17,7 +17,7 @@ const MyOrders = () => {
     const orderDelete = useOrderDelete();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/userOrders?email=${email}`, {
+        fetch(`https://sonic-techland-server.herokuapp.com/userOrders?email=${email}`, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
             }

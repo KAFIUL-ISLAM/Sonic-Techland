@@ -8,7 +8,7 @@ const ManageAllOrders = () => {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/orders')
+        fetch('https://sonic-techland-server.herokuapp.com/orders')
             .then(res => res.json())
             .then(data =>
                 setOrders(data))
@@ -16,7 +16,7 @@ const ManageAllOrders = () => {
 
     const handleShipped = id => {
         const orderStatus = { updatedStatus: 'shipped' }
-        fetch(`http://localhost:5000/orders/${id}`, {
+        fetch(`https://sonic-techland-server.herokuapp.com/orders/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

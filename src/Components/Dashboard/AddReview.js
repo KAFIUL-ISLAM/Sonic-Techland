@@ -18,7 +18,7 @@ const AddReview = () => {
             review: data.review
         }
 
-        fetch('http://localhost:5000/reviews', {
+        fetch('https://sonic-techland-server.herokuapp.com/reviews', {
             method: 'POST',
             headers: {
                 "content-type": "application/json"
@@ -39,7 +39,7 @@ const AddReview = () => {
         <div className="my-32">
             <h1 className="text-2xl font-bold uppercase text-center mb-4">Add a review</h1>
             <div className="flex items-center justify-center">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full mx-4 md:w-1/2 space-y-2">          
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full mx-4 md:w-1/2 space-y-2">
                     <input type="number" className="input input-bordered w-full" {...register("rating", { required: true, min: 1, max: 5 })} placeholder="Rating (1 to 5)" />
                     {errors.rating?.type === 'required' && <span className="text-red-600">*This field is required</span>}
                     {errors.rating?.type === 'min' && <span className="text-red-600">You cannot add rating below 1</span>}

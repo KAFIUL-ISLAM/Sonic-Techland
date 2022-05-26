@@ -12,7 +12,7 @@ const Purchase = () => {
     const { id } = useParams();
     const [item, setItem] = useState({});
     useEffect(() => {
-        fetch(`http://localhost:5000/parts/${id}`)
+        fetch(`https://sonic-techland-server.herokuapp.com/parts/${id}`)
             .then(res => res.json())
             .then(data => setItem(data))
     }, [id])
@@ -73,7 +73,7 @@ const Purchase = () => {
             price,
             status
         }
-        fetch('http://localhost:5000/orders', {
+        fetch('https://sonic-techland-server.herokuapp.com/orders', {
             method: 'POST',
             headers: {
                 "content-type": "application/json"

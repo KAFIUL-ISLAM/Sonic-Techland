@@ -9,10 +9,10 @@ const MyProfile = () => {
     const [toEdit, setToEdit] = useState(false);
     const [profile, setProfile] = useState({});
     useEffect(() => {
-        fetch(`http://localhost:5000/profiles/${user.email}`)
+        fetch(`https://sonic-techland-server.herokuapp.com/profiles/${user.email}`)
             .then(res => res.json())
-        .then(data =>setProfile(data))
-    },[user.email,profile])
+            .then(data => setProfile(data))
+    }, [user.email, profile])
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -34,7 +34,7 @@ const MyProfile = () => {
             education,
             address
         }
-        fetch(`http://localhost:5000/profiles/${email}`, {
+        fetch(`https://sonic-techland-server.herokuapp.com/profiles/${email}`, {
             method: 'PUT',
             headers: {
                 "content-type": "application/json"
@@ -101,12 +101,12 @@ const MyProfile = () => {
                     <div className="font-bold space-y-4 relative p-4">
                         <h1 className="text-2xl font-bold text-primary">{user.displayName}</h1>
                         <p>Email address: {user.email}</p>
-                        <p>Phone Number: { profile.phone}</p>
+                        <p>Phone Number: {profile.phone}</p>
                         <p>Gender: {profile.gender}</p>
-                        <p>LinkedIn: { profile.linkedIn}</p>
-                        <p>Education: { profile.education}</p>
-                        <p>Company: { profile.company}</p>
-                        <p>Address: { profile.address}</p>
+                        <p>LinkedIn: {profile.linkedIn}</p>
+                        <p>Education: {profile.education}</p>
+                        <p>Company: {profile.company}</p>
+                        <p>Address: {profile.address}</p>
                         <button onClick={() => setToEdit(true)} className="btn btn-primary absolute right-0 top-0">edit</button>
                     </div>
                 }

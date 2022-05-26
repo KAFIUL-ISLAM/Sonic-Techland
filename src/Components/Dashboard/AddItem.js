@@ -25,7 +25,7 @@ const AddItem = () => {
                     description: data.description,
                     image: img
                 }
-                fetch('http://localhost:5000/parts', {
+                fetch('https://sonic-techland-server.herokuapp.com/parts', {
                     method: 'POST',
                     headers: {
                         "content-type": "application/json"

@@ -4,11 +4,11 @@ import { toast } from 'react-toastify';
 
 const ManageItem = () => {
 
-    const { data: items, refetch } = useQuery('items', () => fetch('http://localhost:5000/parts').then(res => res.json()))
+    const { data: items, refetch } = useQuery('items', () => fetch('https://sonic-techland-server.herokuapp.com/parts').then(res => res.json()))
 
     const handleDelete = id => {
 
-        const url = `http://localhost:5000/parts/${id}`;
+        const url = `https://sonic-techland-server.herokuapp.com/parts/${id}`;
         fetch(url, {
             method: 'DELETE'
         })

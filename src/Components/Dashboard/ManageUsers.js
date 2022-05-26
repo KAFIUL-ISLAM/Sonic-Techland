@@ -6,7 +6,7 @@ const ManageUsers = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('https://sonic-techland-server.herokuapp.com/users')
             .then(res => res.json())
             .then(data =>
                 setUsers(data))
@@ -14,7 +14,7 @@ const ManageUsers = () => {
 
     const handleUser = id => {
         const userRole = { role: 'admin' }
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://sonic-techland-server.herokuapp.com/users/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -31,7 +31,7 @@ const ManageUsers = () => {
 
     const userDelete = id => {
 
-        const url = `http://localhost:5000/manageUsers/${id}`;
+        const url = `https://sonic-techland-server.herokuapp.com/manageUsers/${id}`;
         fetch(url, {
             method: 'DELETE'
         })

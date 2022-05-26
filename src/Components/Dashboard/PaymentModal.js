@@ -12,19 +12,19 @@ const PaymentModal = ({ order }) => {
     const { _id, email, price, name } = order;
 
     useEffect(() => {
-        fetch('http://localhost:5000/create-payment-intent', {
+        fetch('https://sonic-techland-server.herokuapp.com/create-payment-intent', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({price})
+            body: JSON.stringify({ price })
         })
             .then(res => res.json())
             .then(data => {
                 if (data?.clientSecret) {
                     setClientSecret(data.clientSecret);
-            }
-        })
+                }
+            })
     }, [price])
 
     const handleSubmit = async e => {
@@ -66,17 +66,17 @@ const PaymentModal = ({ order }) => {
         else {
             setError('');
             toast.success('Payment Completed Successfully');
-            const orderStatus = {updatedStatus: 'paid'}
-            fetch(`http://localhost:5000/orders/${_id}`, {
+            const orderStatus = { updatedStatus: 'paid' }
+            fetch(`https://sonic-techland-server.herokuapp.com/orders/${_id}`, {
                 method: 'PUT',
                 headers: {
-                   'content-type': 'application/json'
+                    'content-type': 'application/json'
                 },
                 body: JSON.stringify(orderStatus)
             })
                 .then(res => res.json())
                 .then(data => {
-                    
+
                 })
         }
 
