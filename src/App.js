@@ -18,6 +18,7 @@ import ManageUsers from './Components/Dashboard/ManageUsers';
 import RequiredAdmin from './Components/CommonComp/RequireAdmin';
 import Blogs from './Components/Blogs/Blogs';
 import MyPortfolio from './Components/Protfolio/MyPortfolio';
+import NotFound from './Components/CommonComp/NotFound';
 
 function App() {
   return (
@@ -45,7 +46,7 @@ function App() {
           <Route path='manageorders' element={<RequiredAdmin><ManageAllOrders></ManageAllOrders></RequiredAdmin>}></Route>
           <Route path='manageusers' element={<RequiredAdmin><ManageUsers></ManageUsers></RequiredAdmin>}></Route>
         </Route>
-        <Route path='*' element={<h1>not found</h1>}></Route>
+        <Route path='*' element={<NotFound></NotFound>}></Route>
       </Routes>
       <ToastContainer />
     </div>
