@@ -53,8 +53,8 @@ const MyOrders = () => {
                     {orders?.map((order, index) =>
                         <tr key={order._id}>
                             <th>{index + 1}</th>
-                            <td><div class="avatar">
-                                <div class="w-16 rounded">
+                            <td><div className="avatar">
+                                <div className="w-16 rounded">
                                     <img src={order.itemImage} alt="Tailwind-CSS-Avatar-component" />
                                 </div>
                             </div></td>
@@ -69,27 +69,27 @@ const MyOrders = () => {
                                         <p className='text-orange-600 font-bold'>Shipped</p>
                                         :
                                         <>
-                                            <label for="delete-confirm" class="btn btn-xs modal-button">Delete</label>
-                                            <input type="checkbox" id="delete-confirm" class="modal-toggle" />
-                                            <div class="modal modal-bottom sm:modal-middle">
-                                                <div class="modal-box">
-                                                    <h3 class="font-bold text-lg">Are you sure about delete?</h3>
-                                                    <p class="py-4">The action cannot be undone!</p>
-                                                    <div class="modal-action">
+                                            <label htmlFor="delete-confirm" className="btn btn-xs modal-button mr-2">Delete</label>
+                                            <input type="checkbox" id="delete-confirm" className="modal-toggle" />
+                                            <div className="modal modal-bottom sm:modal-middle">
+                                                <div className="modal-box">
+                                                    <h3 className="font-bold text-lg">Are you sure about delete?</h3>
+                                                    <p className="py-4">The action cannot be undone!</p>
+                                                    <div className="modal-action">
                                                         <button onClick={() => orderDelete(order._id)} className="btn">Confirm</button>
-                                                        <label for="delete-confirm" class="btn">Cancel</label>
+                                                        <label htmlFor="delete-confirm" className="btn">Cancel</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label for="payment-modal" class="btn btn-xs modal-button">Pay now</label>
-                                            <input type="checkbox" id="payment-modal" class="modal-toggle" />
-                                            <div class="modal modal-bottom sm:modal-middle">
-                                                <div class="modal-box">
+                                            <label htmlFor="payment-modal" className="btn btn-xs modal-button">Pay now</label>
+                                            <input type="checkbox" id="payment-modal" className="modal-toggle" />
+                                            <div className="modal modal-bottom sm:modal-middle">
+                                                <div className="modal-box">
                                                     <Elements stripe={stripePromise}>
-                                                        <PaymentModal order={order}/>
+                                                        <PaymentModal order={order} />
                                                     </Elements>
-                                                    <div class="modal-action">
-                                                        <label for="payment-modal" class="btn">Cancel</label>
+                                                    <div className="modal-action">
+                                                        <label htmlFor="payment-modal" className="btn">Cancel</label>
                                                     </div>
                                                 </div>
                                             </div>

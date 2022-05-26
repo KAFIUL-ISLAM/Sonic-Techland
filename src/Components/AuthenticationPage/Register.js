@@ -21,7 +21,7 @@ const Register = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
     const [updateProfile] = useUpdateProfile(auth);
-    const [token] = useToken(user|| googleUser);
+    const [token] = useToken(user || googleUser);
 
     useEffect(() => {
         let from = location.state?.from?.pathname || "/";

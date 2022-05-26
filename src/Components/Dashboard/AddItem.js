@@ -29,7 +29,6 @@ const AddItem = () => {
                     method: 'POST',
                     headers: {
                         "content-type": "application/json"
-                        //admin verify
                     },
                     body: JSON.stringify(item)
                 })

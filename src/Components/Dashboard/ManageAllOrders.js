@@ -12,7 +12,7 @@ const ManageAllOrders = () => {
             .then(res => res.json())
             .then(data =>
                 setOrders(data))
-    }, [orders])//admin verify
+    }, [orders])
 
     const handleShipped = id => {
         const orderStatus = { updatedStatus: 'shipped' }
@@ -41,6 +41,7 @@ const ManageAllOrders = () => {
                         <th>Email</th>
                         <th>Quantity</th>
                         <th>Total Price</th>
+                        <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -51,27 +52,44 @@ const ManageAllOrders = () => {
                             <td>{order.email}</td>
                             <td>{order.quantity}</td>
                             <td>${order.price}</td>
-                            <td>
-                                {order.status === 'paid' ?
-                                    <button onClick={() => handleShipped(order._id)} className="btn btn-xs">Mark shipped</button>
+                            {
+                                order.status === 'paid' ?
+                                    <>
+                                        <td>
+                                            <p className='text-green-600 font-bold'>Paid</p>
+                                        </td>
+                                        <td>
+                                            <button onClick={() => handleShipped(order._id)} className="btn btn-sm">Mark shipped</button>
+                                        </td>
+                                    </>
                                     :
                                     order.status === 'shipped' ?
-                                        <p className='text-green-600 font-bold'>Shipped</p>
+                                        <>
+                                            <td>
+                                                <p className='text-orange-600 font-bold'>Shipped</p>
+                                            </td>
+                                            <td></td>
+                                        </>
                                         : <>
-                                            <label for="delete-confirm" class="btn btn-xs modal-button">Delete</label>
-                                            <input type="checkbox" id="delete-confirm" class="modal-toggle" />
-                                            <div class="modal modal-bottom sm:modal-middle">
-                                                <div class="modal-box">
-                                                    <h3 class="font-bold text-lg">Are you sure about delete?</h3>
-                                                    <p class="py-4">The action cannot be undone!</p>
-                                                    <div class="modal-action">
-                                                        <button onClick={() => orderDelete(order._id)} className="btn">Confirm</button>
-                                                        <label for="delete-confirm" class="btn">Cancel</label>
+                                            <td>
+                                                <p className='text-red-600 font-bold'>Unpaid</p>
+                                            </td>
+                                            <td>
+                                                <label htmlFor="delete-confirm" className="btn btn-sm modal-button">Delete</label>
+                                                <input type="checkbox" id="delete-confirm" className="modal-toggle" />
+                                                <div className="modal modal-bottom sm:modal-middle">
+                                                    <div className="modal-box">
+                                                        <h3 className="font-bold text-lg">Are you sure about delete?</h3>
+                                                        <p className="py-4">The action cannot be undone!</p>
+                                                        <div className="modal-action">
+                                                            <button onClick={() => orderDelete(order._id)} className="btn">Confirm</button>
+                                                            <label htmlFor="delete-confirm" className="btn">Cancel</label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </>}
-                            </td>
+                                            </td>
+                                        </>
+                            }
                         </tr>
                     )}
                 </tbody>
