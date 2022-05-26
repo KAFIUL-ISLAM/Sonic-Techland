@@ -15,6 +15,7 @@ import AddReview from './Components/Dashboard/AddReview';
 import ManageItem from './Components/Dashboard/ManageItem';
 import ManageAllOrders from './Components/Dashboard/ManageAllOrders';
 import ManageUsers from './Components/Dashboard/ManageUsers';
+import RequiredAdmin from './Components/CommonComp/RequireAdmin';
 
 function App() {
   return (
@@ -34,11 +35,11 @@ function App() {
           </RequiredAuth>}>
           <Route index element={<MyProfile></MyProfile>}></Route>
           <Route path='orders' element={<MyOrders></MyOrders>}></Route>
-          <Route path='additem' element={<AddItem></AddItem>}></Route>
           <Route path='addreview' element={<AddReview></AddReview>}></Route>
-          <Route path='manageitem' element={<ManageItem></ManageItem>}></Route>
-          <Route path='manageorders' element={<ManageAllOrders></ManageAllOrders>}></Route>
-          <Route path='manageusers' element={<ManageUsers></ManageUsers>}></Route>
+          <Route path='additem' element={<RequiredAdmin><AddItem></AddItem></RequiredAdmin>}></Route>
+          <Route path='manageitem' element={<RequiredAdmin><ManageItem></ManageItem></RequiredAdmin>}></Route>
+          <Route path='manageorders' element={<RequiredAdmin><ManageAllOrders></ManageAllOrders></RequiredAdmin>}></Route>
+          <Route path='manageusers' element={<RequiredAdmin><ManageUsers></ManageUsers></RequiredAdmin>}></Route>
         </Route>
         <Route path='*' element={<h1>not found</h1>}></Route>
       </Routes>
